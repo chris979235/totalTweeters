@@ -1,51 +1,38 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-const initInputs = {
-  title: "",
-  description: "",
-  imgUrl: ""
-}
+export default function IssueForm(props) {
 
-export default function IssueForm(props){
-  const [inputs, setInputs] = useState(initInputs)
-  const { addTodo } = props
+  const [input, setInput]=useState({title:'',description:''})
 
-  function handleChange(e){
-    const {name, value} = e.target
-    setInputs(prevInputs => ({
-      ...prevInputs,
-      [name]: value
-    }))
-  }
 
   function handleSubmit(e){
     e.preventDefault()
-    addTodo(inputs)
-    setInputs(initInputs)
+    props.addIssues({title: input.title, description: input.description})
+    setInput('')
+  }
+  function handleChange(e){
+    const {name, value}=e.target
+    setInput(prevInputs=> ({...prevInputs,[name]:value}))
   }
 
-  const { title, description, imgUrl } = inputs
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        name="title" 
-        value={title} 
-        onChange={handleChange} 
-        placeholder="Title"/>
-      <input 
-        type="text" 
-        name="description" 
-        value={description} 
-        onChange={handleChange} 
-        placeholder="Description"/>
-      <input 
-        type="text" 
-        name="imgUrl" 
-        value={imgUrl} 
-        onChange={handleChange} 
-        placeholder="Image Url"/>
-      <button>Add Todo</button>
-    </form>
+    <div>
+          create a post 
+       <form onSubmit={handleSubmit}>
+          <input 
+            type="text" 
+            name="title" 
+            value={input.title} 
+            onChange={handleChange} 
+            placeholder='title'/>
+             <input 
+            type="text" 
+            name="description" 
+            value={input.description} 
+            onChange={handleChange} 
+            placeholder='description'/>
+          <button>Add title</button>
+        </form>
+    </div>
   )
 }
