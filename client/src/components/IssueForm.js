@@ -2,36 +2,45 @@ import React, {useState} from 'react'
 
 export default function IssueForm(props) {
 
-  const [input, setInput]=useState({title:'',description:''})
+  const inintInputs={title:'',description:''}
 
+  const [inputs, setInput]=useState(inintInputs)
+
+
+  
+  function handleChange(e){
+    const {name, value} = e.target
+    setInput(prevInputs => ({
+      ...prevInputs,
+      [name]: value
+    }))
+  }
 
   function handleSubmit(e){
     e.preventDefault()
-    props.addIssues({title: input.title, description: input.description})
-    setInput('')
-  }
-  function handleChange(e){
-    const {name, value}=e.target
-    setInput(prevInputs=> ({...prevInputs,[name]:value}))
+    props.addIssue(inputs)
+    setInput(inintInputs)
   }
 
+
+  const { title, description } = inputs
   return (
     <div>
           create a post 
        <form onSubmit={handleSubmit}>
-          <input 
+          <input
             type="text" 
             name="title" 
-            value={input.title} 
+            value={title} 
             onChange={handleChange} 
             placeholder='title'/>
-             <input 
+             <input
             type="text" 
             name="description" 
-            value={input.description} 
+            value={description} 
             onChange={handleChange} 
             placeholder='description'/>
-          <button>Add title</button>
+          <button>Add post</button>
         </form>
     </div>
   )

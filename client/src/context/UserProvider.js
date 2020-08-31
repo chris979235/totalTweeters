@@ -116,6 +116,7 @@ userAxios.interceptors.request.use(config =>{
   function logOut() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    console.log(localStorage,888)
     setUserState({
         user: {},
         token: "",

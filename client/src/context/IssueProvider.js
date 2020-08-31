@@ -12,42 +12,42 @@ issueAxios.interceptors.request.use(config =>{
 })
 
 const initInputs = {
-  title: "",
-  description: "",
+posted: [], 
+votedUp:0,
+votedDown:0
 }
 
  export default function IssueProvider(props) {
  
   
   const [issues, setIssues]=useState(initInputs)
-  const [votedUp, setVotedUp]=useState(0)
-  const [votedDown, setVotedDown]=useState(0)
+  const [upvote, setVotedUp]=useState(0)
+  const [downvote, setVotedDown]=useState(0)
   console.log(issues,787878)
 
 
-  const getIssues = useCallback(() => {
-    issueAxios
-    .get("/api/issue")
-    .then((res,) => {
-      setIssues(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, [])
-  
-useEffect(()=>{
-  getIssues()
-},[])
+  function getUserIssues(){
+    issueAxios.get("/api/issue/user")
+      .then(res => {
+        setIssues(prevState => ({
+          ...prevState,
+          posted: res.data
+        }))
+      })
+      .catch(err => console.log(err.response.data.errMsg))
+  }
 
-function addIssues(...newIssues){
+  
+
+function addIssue(newIssues){
   issueAxios.post("/api/issue", newIssues)
     .then(res => {
-      console.log(res.data)
-      setIssues(prevState => ({
+      setIssues(prevState => {
+        return {
         ...prevState,
-        issues: [prevState, res.data]
-      }))
+        posted: [...prevState.posted, res.data]
+      }
+    })
     })
     .catch(err => console.log(err))
 }
@@ -93,11 +93,11 @@ function voteDown(issueid){
   return (
     <IssueContext.Provider
     value={{
-      issues,
+      ...issues,
       voteUp,
       voteDown,
-      getIssues,
-      addIssues,
+      getUserIssues,
+      addIssue,
     }}>
     {props.children}
     </IssueContext.Provider>
