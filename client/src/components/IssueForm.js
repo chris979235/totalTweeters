@@ -26,7 +26,6 @@ export default function IssueForm(props) {
   const { title, description } = inputs
   return (
     <div>
-          create a post 
        <form onSubmit={handleSubmit}>
           <input
             type="text" 

@@ -11,60 +11,59 @@ issueAxios.interceptors.request.use(config =>{
   return config
 })
 
-const initInputs = {
-posted: [], 
-votedUp:0,
-votedDown:0
-}
+const initInputs = []
+
 
  export default function IssueProvider(props) {
  
   
   const [issues, setIssues]=useState(initInputs)
-  const [upvote, setVotedUp]=useState(0)
-  const [downvote, setVotedDown]=useState(0)
-  console.log(issues,787878)
-
+  
+  console.log(issues,777)
 
   function getUserIssues(){
     issueAxios.get("/api/issue/user")
       .then(res => {
-        setIssues(prevState => ({
-          ...prevState,
-          posted: res.data
-        }))
+        setIssues(
+          res.data
+       )
       })
       .catch(err => console.log(err.response.data.errMsg))
   }
+
+  function getAllIssues(){
+    issueAxios.get('/api/issue')
+    .then(res => {
+      setIssues(
+         res.data
+      )
+    })
+    .catch(err => console.log(err.response.data.errMsg))
+}
 
   
 
 function addIssue(newIssues){
   issueAxios.post("/api/issue", newIssues)
     .then(res => {
-      setIssues(prevState => {
-        return {
-        ...prevState,
-        posted: [...prevState.posted, res.data]
-      }
-    })
+      setIssues(prevState => [...prevState, res.data])
     })
     .catch(err => console.log(err))
 }
-
+//
 
 function voteUp(issueid){
   issueAxios
   .put(`/api/issue/upvote/${issueid}`)
   .then((res,) => {
-    setVotedUp( prev =>{  
-     const foundIssue= prev.findIndex((issue) => issue._id===issueid) 
-     const edditedObject={...prev[foundIssue], upvote: res.data.upvote}
-     const begining = prev.slice(0, foundIssue)
-     const ending = prev.slice(foundIssue +1)
-     return [...begining, edditedObject, ...ending]
-    }
-    );
+    setIssues(prev=>{
+      console.log(prev,888)
+    const issueIndex=prev.findIndex(issue=>issue._id===issueid)
+    const newObject={...prev[issueIndex], upvote: res.data.upvote}
+    const newIssues=[...prev]
+    newIssues.splice(issueIndex,1,newObject)
+    return newIssues
+  })
   })
   .catch((err) => {
     console.log(err);
@@ -75,14 +74,14 @@ function voteDown(issueid){
   issueAxios
   .put(`/api/issue/downvote/${issueid}`)
   .then((res,) => {
-    setVotedDown( prev =>{  
-     const foundIssue= prev.findIndex((issue) => issue._id===issueid) 
-     const edditedObject={...prev[foundIssue], downvote: res.data.downvote}
-     const begining = prev.slice(0, foundIssue)
-     const ending = prev.slice(foundIssue +1)
-     return [...begining, edditedObject, ...ending]
-    }
-    );
+    setIssues(prev=>{
+      console.log(prev,888)
+    const issueIndex=prev.findIndex(issue=>issue._id===issueid)
+    const newObject={...prev[issueIndex], downvote: res.data.downvote}
+    const newIssues=[...prev]
+    newIssues.splice(issueIndex,1,newObject)
+    return newIssues
+  })
   })
   .catch((err) => {
     console.log(err);
@@ -93,11 +92,12 @@ function voteDown(issueid){
   return (
     <IssueContext.Provider
     value={{
-      ...issues,
       voteUp,
       voteDown,
       getUserIssues,
+      getAllIssues,
       addIssue,
+      issues,
     }}>
     {props.children}
     </IssueContext.Provider>
