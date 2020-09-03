@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
+import {CommentsContext} from './CommentsProvider'
+import {IssueContext} from './IssueProvider'
 import axios from 'axios'
 
 export const UserContext = React.createContext();
@@ -12,11 +14,11 @@ userAxios.interceptors.request.use(config =>{
 })
 
    export default function UserProvider(props) {
-
+    const {getUserComments}=useContext(CommentsContext)
+    const {getAllIssues}=useContext(IssueContext)
   const initState = {
     user: JSON.parse(localStorage.getItem('user')) || {},
     token: localStorage.getItem("token") || "",
-    comments: [],
     errMsg:"",
   }
 
@@ -31,6 +33,8 @@ userAxios.interceptors.request.use(config =>{
     const {user, token}=res.data
     localStorage.setItem("token", token)
     localStorage.setItem("user", JSON.stringify(user))
+    getUserComments()
+    getAllIssues()
     setUserState(prevUserState =>({
       ...prevUserState,
       user,
@@ -65,52 +69,11 @@ userAxios.interceptors.request.use(config =>{
   }))
   }
 
-  function getUserComments(titleid){
-    userAxios.get(`/api/comments/${titleid}`)
-    .then(res => {
-      console.log(res.data)
-      setUserState(prevState =>({
-        ...prevState,
-        comments:res.data
-      }))
-    })
-    .catch(err=> console.log(err.response.data.errMsg))
-  }
-  
-  
-
-  function addComment(newComment){
-  userAxios.post('/api/comments', newComment)
-  .then(res => {
-    setUserState( prevState=>({
-      ...prevState,
-      comments:[...prevState.comments, res.data]
-    }))
-  })
-  .catch(err=> console.log(err.response.data.errMsg))
-  }
-
-
   function resetAuthError(){
     setUserState(prevState => ({
       ...prevState, 
       errMsg:""
     }))
-  }
- 
-
-  function deleteComment(commentsid) {
-    userAxios
-        .delete(`/api/comments/${commentsid}`)
-        .then((res) => {
-            setUserState((prev) =>
-              ({
-                ...prev,
-                comments: prev.comments.filter((comments) => comments._id !== commentsid)
-                })
-            );
-        })
-        .catch((error) => console.log(error));
   }
 
   function logOut() {
@@ -123,6 +86,49 @@ userAxios.interceptors.request.use(config =>{
         comments: [],
     });
 }
+ 
+
+  // function getUserComments(titleid){
+  //   userAxios.get(`/api/comments/${titleid}`)
+  //   .then(res => {
+  //     console.log(res.data)
+  //     setUserState(prevState =>({
+  //       ...prevState,
+  //       comments:res.data
+  //     }))
+  //   })
+  //   .catch(err=> console.log(err.response.data.errMsg))
+  // }
+  
+  
+
+  // function addComment(newComment){
+  // userAxios.post('/api/comments', newComment)
+  // .then(res => {
+  //   setUserState( prevState=>({
+  //     ...prevState,
+  //     comments:[...prevState.comments, res.data]
+  //   }))
+  // })
+  // .catch(err=> console.log(err.response.data.errMsg))
+  // }
+
+
+  // function deleteComment(commentsid) {
+  //   userAxios
+  //       .delete(`/api/comments/${commentsid}`)
+  //       .then((res) => {
+  //           setUserState((prev) =>
+  //             ({
+  //               ...prev,
+  //               comments: prev.comments.filter((comments) => comments._id !== commentsid)
+  //               })
+  //           );
+  //       })
+  //       .catch((error) => console.log(error));
+  // }
+
+
 
 
   return (
@@ -131,10 +137,7 @@ userAxios.interceptors.request.use(config =>{
         ...userState,
         signup,
         login,
-        addComment,
         resetAuthError,
-        deleteComment,
-        getUserComments,
         logOut,
       }}>
       {props.children}

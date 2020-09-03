@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
-
 export default function IssueForm(props) {
 
   const inintInputs={title:'',description:''}
 
   const [inputs, setInput]=useState(inintInputs)
 
-
+  
   
   function handleChange(e){
     const {name, value} = e.target

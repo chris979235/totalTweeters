@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 
 export const IssueContext=React.createContext()
@@ -38,7 +38,7 @@ const initInputs = []
          res.data
       )
     })
-    .catch(err => console.log(err.response.data.errMsg))
+    .catch(err => console.log(err))
 }
 
   
