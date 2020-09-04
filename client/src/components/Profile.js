@@ -22,10 +22,10 @@ export default function Profile() {
 
   return (
     <div className="profile">
-    <h1>Welcome @{username}!</h1>
+    <h1>Welcome @{username}! To TotalTweeters</h1>
     <h3>create a post</h3>
     <IssueForm addIssue={addIssue}/>
     {issues.sort((a,b) => b.upvote-a.upvote).map(issues => <IssueList issues={issues} key={issues._id}/>)}
-  </div>//
+  </div>
   )
 }

@@ -14,7 +14,7 @@ userAxios.interceptors.request.use(config =>{
 })
 
    export default function UserProvider(props) {
-    const {getUserComments}=useContext(CommentsContext)
+    const { getAllComments}=useContext(CommentsContext)
     const {getAllIssues}=useContext(IssueContext)
   const initState = {
     user: JSON.parse(localStorage.getItem('user')) || {},
@@ -33,7 +33,7 @@ userAxios.interceptors.request.use(config =>{
     const {user, token}=res.data
     localStorage.setItem("token", token)
     localStorage.setItem("user", JSON.stringify(user))
-    getUserComments()
+     getAllComments()
     getAllIssues()
     setUserState(prevUserState =>({
       ...prevUserState,
@@ -41,7 +41,7 @@ userAxios.interceptors.request.use(config =>{
       token
     }))
   })
-  .catch(err => handleAuthError(err.response.data.errMsg))
+  .catch(err => handleAuthError(err))
   }
 
   function login(credentials){
@@ -50,14 +50,14 @@ userAxios.interceptors.request.use(config =>{
       const {user, token}=res.data
       localStorage.setItem("token",token)
       localStorage.setItem("user", JSON.stringify(user))
-      getUserComments()
+      getAllComments()
       setUserState(prevUserState =>({
         ...prevUserState,
         user,
         token,
       }))
     })
-    .catch(err => handleAuthError(err.response.data.errMsg))
+    .catch(err => handleAuthError(err))
   }
 
  
@@ -88,47 +88,11 @@ userAxios.interceptors.request.use(config =>{
 }
  
 
-  // function getUserComments(titleid){
-  //   userAxios.get(`/api/comments/${titleid}`)
-  //   .then(res => {
-  //     console.log(res.data)
-  //     setUserState(prevState =>({
-  //       ...prevState,
-  //       comments:res.data
-  //     }))
-  //   })
-  //   .catch(err=> console.log(err.response.data.errMsg))
-  // }
-  
   
 
-  // function addComment(newComment){
-  // userAxios.post('/api/comments', newComment)
-  // .then(res => {
-  //   setUserState( prevState=>({
-  //     ...prevState,
-  //     comments:[...prevState.comments, res.data]
-  //   }))
-  // })
-  // .catch(err=> console.log(err.response.data.errMsg))
-  // }
+  
 
-
-  // function deleteComment(commentsid) {
-  //   userAxios
-  //       .delete(`/api/comments/${commentsid}`)
-  //       .then((res) => {
-  //           setUserState((prev) =>
-  //             ({
-  //               ...prev,
-  //               comments: prev.comments.filter((comments) => comments._id !== commentsid)
-  //               })
-  //           );
-  //       })
-  //       .catch((error) => console.log(error));
-  // }
-
-
+  
 
 
   return (

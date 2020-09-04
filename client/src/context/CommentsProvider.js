@@ -13,26 +13,48 @@ commentsAxios.interceptors.request.use(config =>{
 })
 
 export default function CommentsProvider(props) {
-const [comments, setComments]=useState([])
+
+
+
+
+const [comments, setComments] = useState([])
+
+
 console.log(comments,'comments')
 
-  function getUserComments(titleid){
-    commentsAxios.get(`/api/comments/${titleid}`)
-    .then(res => {
-      setComments(
-         res.data
-      )
+  // function getUserComments(titleid){
+  //   commentsAxios.get(`/api/comments/${titleid}`)
+  //   .then(res => {
+  //     setComments(
+  //       res.data
+  //     )
+  //   })
+  //   .catch(err=> console.log(err))
+  // }
+  
+  // function getCommentsByIssue(issueid){
+  //   console.log(issueid,'issueid')
+  //   commentsAxios.get(`/api/comments/issue/${issueid}`)
+  //   .then(res => {
+  //     console.log(res.data, 'response of all comments by issue')
+  //     setComments(res.data.reverse())
+  // })
+  //   .catch(err=> console.log(err))
+  // }
+
+  function getAllComments(){
+    commentsAxios.get('/api/comments')
+    .then(res=>{
+      setComments(res.data)
     })
-    .catch(err=> console.log(err.response.data.errMsg))
+    .catch(err=>console.log(err))
   }
-  
-  
 
   function addComment(newComment){
   commentsAxios.post('/api/comments', newComment)
   .then(res => {
     setComments( prevState=>(
-     [...prevState, res.data]
+    [ res.data, ...prevState]
     ))
   })
   .catch(err=> console.log(err))
@@ -59,9 +81,12 @@ console.log(comments,'comments')
   return (
     <CommentsContext.Provider
       value={{
+        comments,
         addComment,
         deleteComment,
-        getUserComments,
+        // getUserComments,
+        // getCommentsByIssue,
+        getAllComments
       }}>
       {props.children}
       </CommentsContext.Provider>

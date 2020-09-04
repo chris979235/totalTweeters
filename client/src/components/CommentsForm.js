@@ -1,16 +1,17 @@
 import React, {useState, useContext, useEffect} from 'react'
-import CommentDisplay from './CommentDisplay'
+import CommentList from './CommentList'
 import {CommentsContext} from '../context/CommentsProvider'
 
 
 
-export default function CommentsFom(props) {
+export default function CommentsForm(props) {
+  const{addComment, deleteComment,  comments}=useContext(CommentsContext)
+ 
+  const [inputs, setInput] = useState({text:''})
   
-  const [inputs, setInput] = useState('')
-console.log(inputs,555566)
+  console.log(comments,'comments')
 
-  const{addComment, deleteComment}=useContext(CommentsContext)
-
+  //
   
 
   const handleChange = e => setInput(e.target.value)
@@ -19,7 +20,7 @@ console.log(inputs,555566)
   const handleSubmit = (e) => {
     e.preventDefault()
     addComment({text: inputs, issue: props.issue._id})
-    setInput('')
+    setInput({text:''})
   }
 
   const { text} = inputs
@@ -31,9 +32,11 @@ console.log(inputs,555566)
             name="text" 
             value={text} 
             onChange={handleChange} 
-            placeholder={props.issue.title}/>
+            placeholder={props.issue.description}/>
           <button>Add Comment</button>
         </form>
+        {comments.filter(comment=>props.issue._id===comment.issue).
+        map(comment=><CommentList comment={comment} deleteComment={deleteComment}/>)}
     </div>
   )
 }

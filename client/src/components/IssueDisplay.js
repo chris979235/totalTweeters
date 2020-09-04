@@ -1,6 +1,5 @@
-import React, {useState,useContext} from 'react'
+import React, {useContext} from 'react'
 import {IssueContext} from '../context/IssueProvider'
-import CommentsForm from './CommentsForm'
 
 export default function IssueDisplay(props) {
   const {voteUp, voteDown}=useContext(IssueContext)
