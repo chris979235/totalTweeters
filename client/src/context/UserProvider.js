@@ -41,7 +41,7 @@ userAxios.interceptors.request.use(config =>{
       token
     }))
   })
-  .catch(err => handleAuthError(err))
+  .catch(err => handleAuthError(err.response.data.errMsg))
   }
 
   function login(credentials){
@@ -57,7 +57,7 @@ userAxios.interceptors.request.use(config =>{
         token,
       }))
     })
-    .catch(err => handleAuthError(err))
+    .catch(err => handleAuthError(err.response.data.errMsg))
   }
 
  

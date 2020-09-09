@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 export default function AuthForm(props){
   const {
@@ -31,3 +32,5 @@ export default function AuthForm(props){
     </form>
   )
 }
+
+

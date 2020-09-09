@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import AuthForm from './AuthForm.js'
+import styled from 'styled-components'
 import { UserContext } from '../context/UserProvider.js'
 
 const initInputs = { username: "", password: "" }
@@ -34,8 +35,10 @@ export default function Auth(){
   }
 
   return (
-    <div className="auth-container">
-      <h1>Welcome to Total Tweeters</h1>
+    <Div className="auth-container"> 
+        <Intro>Welcome to TotalTweeters a place to create and talk about anything you want. 
+          get in touch with like minded individuals and share stories or complaints about your life.</Intro>
+      <h1> Total Tweeters</h1>
       { !toggle ?
         <>
           <AuthForm 
@@ -45,7 +48,7 @@ export default function Auth(){
             btnText="Sign up"
             errMsg={errMsg}
           />
-          <p onClick={toggleForm}>Already a member?</p>
+          <Button onClick={toggleForm}>Already a member?</Button>
         </>
       :
         <>
@@ -55,10 +58,34 @@ export default function Auth(){
             inputs={inputs}
             btnText="Login"
             errMsg={errMsg}
+            className="authform"
           />
-          <p onClick={toggleForm}>Not a member?</p>
+          <Button onClick={toggleForm}>Not a member?</Button>
         </>
       }
-    </div>
+    </Div>
   )
 }
+
+const Button = styled.p`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: rgb(128, 159, 255);
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+const Div= styled.div`
+  background: lightsalmon;
+  border-radius: 3px;
+  color: rgb(128, 159, 255);
+  padding: 5em 1em;
+`
+
+const Intro=styled.h2`
+width:300px;
+margin-right:95vh;
+margin-top:5em;
+position:absolute;
+font-size:25px;
+`

@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import styled from 'styled-components'
+
 export default function IssueForm(props) {
 
   const inintInputs={title:'',description:''}
@@ -25,7 +27,7 @@ export default function IssueForm(props) {
   const { title, description } = inputs
   return (
     <div>
-       <form onSubmit={handleSubmit}>
+       <form onSubmit={handleSubmit} className='issueform'>
           <input
             type="text" 
             name="title" 
@@ -38,8 +40,10 @@ export default function IssueForm(props) {
             value={description} 
             onChange={handleChange} 
             placeholder='description'/>
-          <button>Add post</button>
+          <button className='butt'>Add post</button>
         </form>
     </div>
   )
 }
+
+

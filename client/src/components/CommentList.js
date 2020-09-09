@@ -8,7 +8,6 @@ export default function CommentList(props) {
   console.log(334455,props)
   return (
     <div>
-      <p>@{username}</p>
 {props.comment.text}
     </div>
   )

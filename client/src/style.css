@@ -1,5 +1,4 @@
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-size: 16px;
@@ -8,9 +7,7 @@
   text-decoration: none;
 }
 
-.app {
-  background-color: #eee9;
-}
+
 
 .navbar {
   display: flex;
@@ -38,65 +35,110 @@
 }
 
 .auth-container > form {
-  border: 1px solid #3339;
   padding: 20px;
-  border-radius: 5px;
-  background-color: #aaa9;
+  background-color: lightblue ;
 
   display: flex;
   flex-direction: column;
+  
+  border-radius: 10px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  width:300px;
+  height:400px;
 }
 
 .auth-container > form > input {
-  margin: 16px 8px;
+  margin: 30px 8px;
   padding: 8px;
   border-radius: 4px;
+  font-size:20px
 }
 
 .auth-container > form > button {
-  margin: 16px 8px;
+  margin: 30px 8px;
   padding: 8px;
   border-radius: 4px;
+  font-size:20px
 }
 
+/* //////////profile//////////// */
+  .profile{
+    margin-top:10vh;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height:500px;
+  }
 
+  .gridcontainer{
+    display: grid;
+    justify-items: center;
+    grid-template-rows:10% 10% 60%;
+    height:450px;
+  }
+  .gridcontainer > h1{
+    font-size: 30px;
+    color: rgb(128, 159, 255);
+  }
+  .gridcontainer > h3{
+    font-size: 25px;
+    color:rgb(128, 159, 255);
+  }
+  
 
-.public {
-  height: 100vh;
+  .issueformholder{
+    display:grid;
+    padding:10px;
+    background-color: rgb(128, 159, 255);
+    border-radius: 10px;
+  }
+
+ .issueform{
+   grid-column:2/3;
+   display:flex;
+   flex-direction: column;
+   width:300px;
+ }
+ .issueform > input{
+   margin-top:20px;
+   height:50px;
+   border-radius: 10px;
+ }
+ .issueform >button{
+   margin:20px;
+   height: 50px;
+   background-color: rgb(255, 122, 122);
+   border-radius: 10px;
+   color: rgb(78, 99, 161);
+ }
+ .issuelist{
+   display:grid;
+   grid-column: 0/1;
+   margin-top:25px;
+ }
+ .issuegrid{
+   display:block;
+   grid-column:0/1;
+   margin:5px;
+   text-align: center;
+   
+ }
+.issuegrid > div{
+  border: 1px solid #000000;
+  border-radius:10px;
+  background-color: rgb(255, 122, 122);
+   color: rgb(78, 99, 161);
 }
+ .issuegrid > div >  h1{
+   margin:5px;
+ }
+ .issuegrid >div >h2{
+   margin: 5px;
+ }
+ .yourissues{
+   font-size:20px;
+   font-style:bold;
+   color: rgb(255, 122, 122);
+ }
 
-.profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-}
-
-.profile > h1 {
-  margin: 8px;
-  font-size: 2em;
-  text-align: center;
-}
-
-.profile > h3 {
-  margin: 16px 0;
-  text-decoration: underline;
-}
-
-.profile > form {
-  display: flex;
-  flex-direction: column;
-  margin: 16px 0;
-  border: 1px solid #3339;
-  background-color: #aaa9;
-  padding: 16px;
-  border-radius: 5px
-}
-
-.profile > form > input,
-.profile > form > button {
-  margin: 8px 0;
-  padding: 8px;
-  border-radius: 5px
-}
-
+ /* ////////////////public////////////////////// */
