@@ -16,9 +16,14 @@ getAllComments()
 },[])
 
   return (
-    <div className="public">
-      {issues.sort((a,b) => b.upvote-a.upvote).map(issues => <IssueDisplay issues={issues} key={issues._id} />)}
-      {issues.map(issue=><CommentsForm issue={issue} />)}
+    <div className='maincontainer'>
+      <div className="issuecontainer1">
+        {issues.sort((a,b) => b.upvote-a.upvote).map(issues => <IssueDisplay issues={issues} key={issues._id} />)}
+      </div>
+        <div className='commentsform'>
+          {issues.map(issue=><CommentsForm issue={issue} />)}
+        </div>
     </div>
+      
   )
 }

@@ -6,10 +6,13 @@ export default function IssueDisplay(props) {
   
 
   return (
-    <div>
-   <h1>{props.issues.title} {props.issues.description}</h1> 
-  <button onClick={()=>voteDown(props.issues._id)}>votedown:{props.issues.downvote}</button>
-  <button onClick={()=>voteUp(props.issues._id)}>voteup{props.issues.upvote}</button>
+    <div className='issuegridcontainer'>
+      <div className='dived'>
+        <button className='butt1' onClick={()=>voteDown(props.issues._id)}>votedown:{props.issues.downvote}</button>
+        <button className='butt2' onClick={()=>voteUp(props.issues._id)}>voteup{props.issues.upvote}</button>
+      </div>
+        <h1 className='halved'>{props.issues.title} {props.issues.description}</h1> 
+        
   </div>
   )
 }
