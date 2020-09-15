@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import {CommentsContext} from './CommentsProvider'
 import axios from 'axios'
 
 export const IssueContext=React.createContext()
 
 export const issueAxios=axios.create()
-
 issueAxios.interceptors.request.use(config =>{
   const token=localStorage.getItem("token")
   config.headers.Authorization=`Bearer ${token}`
@@ -14,8 +14,9 @@ issueAxios.interceptors.request.use(config =>{
 const initInputs = []
 
 
- export default function IssueProvider(props) {
- 
+export default function IssueProvider(props) {
+  
+  const {deleteIssueComments}=useContext(CommentsContext)
   
   const [issues, setIssues]=useState(initInputs)
   
@@ -41,8 +42,6 @@ const initInputs = []
     .catch(err => console.log(err))
 }
 
-  
-
 function addIssue(newIssues){
   issueAxios.post("/api/issue", newIssues)
     .then(res => {
@@ -50,14 +49,24 @@ function addIssue(newIssues){
     })
     .catch(err => console.log(err))
 }
-//
+
+function deleteIssue(issueid) {
+  deleteIssueComments(issueid)
+  issueAxios.delete(`/api/issue/${issueid}`)
+      .then((res) => {
+        console.log(res,'resdata')
+          setIssues(
+              issues.filter((issue) => issue._id !== issueid)
+          );
+      })
+      .catch((error) => console.log(error));
+}
 
 function voteUp(issueid){
   issueAxios
   .put(`/api/issue/upvote/${issueid}`)
   .then((res,) => {
     setIssues(prev=>{
-      console.log(prev,888)
     const issueIndex=prev.findIndex(issue=>issue._id===issueid)
     const newObject={...prev[issueIndex], upvote: res.data.upvote}
     const newIssues=[...prev]
@@ -98,6 +107,7 @@ function voteDown(issueid){
       getAllIssues,
       addIssue,
       issues,
+      deleteIssue,
     }}>
     {props.children}
     </IssueContext.Provider>

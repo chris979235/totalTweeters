@@ -55,6 +55,8 @@ commentRouter.post("/", (req, res, next) => {
   newComment.save((err, savedComment) => {
     if(err){
       res.status(500)
+      console.log(err,'err')
+      console.log(req.body,'redbody')
       return next(err)
     }
     return res.status(201).send(savedComment)
@@ -65,7 +67,7 @@ commentRouter.post("/", (req, res, next) => {
 
 // Delete Comment
 commentRouter.delete("/:commentId", (req, res, next) => {
-  Comment.findOneAndDelete(
+  Comment.findByIdAndDelete(
     { _id: req.params.commentId},
     {user: req.params.userid},
     (err, deletedComment) => {

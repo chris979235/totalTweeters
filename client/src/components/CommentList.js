@@ -1,12 +1,8 @@
-import React, {useContext} from 'react'
-import {UserContext} from '../context/UserProvider'
+import React from 'react'
 export default function CommentList(props) {
-  const {user: { 
-    username 
-  }
-}=useContext(UserContext)
-  console.log(334455,props)
-  return (
+  console.log(props,'props')
+
+return (
     <div>
 {props.comment.text}
     </div>

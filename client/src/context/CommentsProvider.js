@@ -20,7 +20,7 @@ export default function CommentsProvider(props) {
 const [comments, setComments] = useState([])
 
 
-console.log(comments,'comments')
+console.log(comments,1234)
 
   // function getUserComments(titleid){
   //   commentsAxios.get(`/api/comments/${titleid}`)
@@ -53,25 +53,31 @@ console.log(comments,'comments')
   function addComment(newComment){
   commentsAxios.post('/api/comments', newComment)
   .then(res => {
+    console.log(res.data,'resdata')
     setComments( prevState=>(
     [ res.data, ...prevState]
     ))
   })
   .catch(err=> console.log(err))
   }
-
+  console.log(comments,'comments')
   
+  function deleteIssueComments(issueid){
+    const issueComments=comments.filter(commentandissue => commentandissue.issue === issueid)
+    console.log(issueComments,'issuecomments')
+    issueComments.map(deleted => deleteComment(deleted._id))
+  }
 
 
   function deleteComment(commentsid) {
+    console.log(commentsid, 'comments id')
     commentsAxios
         .delete(`/api/comments/${commentsid}`)
         .then((res) => {
             setComments((prev) =>
-              ({
-                ...prev,
-                comments: prev.comments.filter((comments) => comments._id !== commentsid)
-                })
+              (
+                comments.filter((comments) => comments._id !== commentsid)
+              )
             );
         })
         .catch((error) => console.log(error));
@@ -86,7 +92,8 @@ console.log(comments,'comments')
         deleteComment,
         // getUserComments,
         // getCommentsByIssue,
-        getAllComments
+        getAllComments,
+        deleteIssueComments,
       }}>
       {props.children}
       </CommentsContext.Provider>

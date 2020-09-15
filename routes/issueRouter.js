@@ -107,5 +107,17 @@ issueRouter.put("/downvote/:issueID", async (req, res, next) => {
     })
   })
   
-  
+  issueRouter.delete("/:issueid", (req, res, next) => {
+    Issue.findByIdAndDelete(
+      { _id: req.params.issueid},
+      {user: req.params.userid},
+      (err, deletedissue) => {
+        if(err){
+          res.status(500)
+          return next(err)
+        }
+        return res.status(200).send(deletedissue)
+      }
+    )
+  })
   module.exports = issueRouter

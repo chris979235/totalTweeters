@@ -27,7 +27,7 @@ const issueSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
-  }
+  },
 })
 
 module.exports = mongoose.model("Issue", issueSchema)

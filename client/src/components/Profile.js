@@ -14,7 +14,7 @@ export default function Profile() {
   const { 
     addIssue, 
     getUserIssues,
-    issues
+    issues,
   } = useContext(IssueContext)
 
   useEffect(()=>{

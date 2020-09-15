@@ -1,31 +1,48 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext} from 'react'
 import CommentList from './CommentList'
 import {CommentsContext} from '../context/CommentsProvider'
 
 
 
 export default function CommentsForm(props) {
-  const{addComment, deleteComment,  comments}=useContext(CommentsContext)
+  const{addComment, deleteComment, comments}=useContext(CommentsContext)
  
-  const [inputs, setInput] = useState({text:''})
+  const [text, setText] = useState('')
+  const [toggle, setToggle]= useState(true)
+
+  console.log(toggle,'toggle')
   
-  console.log(comments,'comments')
+  function toggled(){
+    setToggle(toggle===true?false:true)
+  }
 
-  //
-  
-
-  const handleChange = e => setInput(e.target.value)
-
+  const handleChange = e => {
+    setText(e.target.value)
+  }
+  // function handleChange(e){
+  //   const {name, value} = e.target
+  //   setInput(prevInputs => ({
+  //     ...prevInputs,
+  //     [name]: value
+  //   }))
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    addComment({text: inputs, issue: props.issue._id})
-    setInput({text:''})
+    addComment({text, issue: props.issue._id})
+    setText('')
   }
 
-  const { text} = inputs
+  
   return (
     <div>
+      { toggle ?
+          <div>
+         {comments.filter(comment=>props.issue._id===comment.issue).map
+           (comment=><CommentList comment={comment} deleteComment={deleteComment} key={comment._id}/>)}
+           <button onClick={() => toggled()} className='addbutton'>Add Comment</button>
+         </div>
+        :
        <form onSubmit={handleSubmit}>
           <input
             type="text" 
@@ -33,10 +50,10 @@ export default function CommentsForm(props) {
             value={text} 
             onChange={handleChange} 
             placeholder={props.issue.description}/>
-          <button>Add Comment</button>
+          <button className='buttons'>submit</button>
+          <button onClick={ () => toggled()} className='buttons'>close</button>
         </form>
-        {comments.filter(comment=>props.issue._id===comment.issue).
-        map(comment=><CommentList comment={comment} deleteComment={deleteComment}/>)}
+        }
     </div>
   )
 }

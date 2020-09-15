@@ -1,15 +1,15 @@
 import React, {useContext, useEffect} from 'react'
 import IssueDisplay from './IssueDisplay'
-import CommentsForm from './CommentsForm'
+// import CommentsForm from './CommentsForm'
 import { IssueContext } from '../context/IssueProvider'
 import {CommentsContext} from '../context/CommentsProvider'
 
 export default function Public(){
  
-const {getAllComments}=useContext(CommentsContext)
-
+const {getAllComments, comments}=useContext(CommentsContext)
 const {getAllIssues, issues}=useContext(IssueContext)
 console.log(issues,'issues')
+
 useEffect(()=>{
 getAllIssues()
 getAllComments()
@@ -18,11 +18,8 @@ getAllComments()
   return (
     <div className='maincontainer'>
       <div className="issuecontainer1">
-        {issues.sort((a,b) => b.upvote-a.upvote).map(issues => <IssueDisplay issues={issues} key={issues._id} />)}
+        {issues.sort((a,b) => b.upvote-a.upvote).map(issue => <IssueDisplay issue={issue} key={issue._id} />)}
       </div>
-        <div className='commentsform'>
-          {issues.map(issue=><CommentsForm issue={issue} />)}
-        </div>
     </div>
       
   )
