@@ -13,19 +13,13 @@ export default function CommentsForm(props) {
   console.log(toggle,'toggle')
   
   function toggled(){
-    setToggle(toggle===true?false:true)
+    setToggle(prevtoggle => prevtoggle === true?false:true)
   }
 
   const handleChange = e => {
     setText(e.target.value)
   }
-  // function handleChange(e){
-  //   const {name, value} = e.target
-  //   setInput(prevInputs => ({
-  //     ...prevInputs,
-  //     [name]: value
-  //   }))
-  // }
+  
 
   const handleSubmit = (e) => {
     e.preventDefault()
