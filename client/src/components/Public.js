@@ -1,18 +1,17 @@
 import React, {useContext, useEffect} from 'react'
 import IssueDisplay from './IssueDisplay'
-// import CommentsForm from './CommentsForm'
 import { IssueContext } from '../context/IssueProvider'
 import {CommentsContext} from '../context/CommentsProvider'
 
 export default function Public(){
  
-const {getAllComments, comments}=useContext(CommentsContext)
+const {getAllComments}=useContext(CommentsContext)
 const {getAllIssues, issues}=useContext(IssueContext)
 console.log(issues,'issues')
 
 useEffect(()=>{
-getAllIssues()
-getAllComments()
+  getAllIssues()
+  getAllComments()
 },[])
 
   return (

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {IssueContext} from '../context/IssueProvider'
 export default function IssueList(props) {
 const {deleteIssue}=useContext(IssueContext)
