@@ -20,27 +20,8 @@ export default function CommentsProvider(props) {
 const [comments, setComments] = useState([])
 
 
-console.log(comments,1234)
 
-  // function getUserComments(titleid){
-  //   commentsAxios.get(`/api/comments/${titleid}`)
-  //   .then(res => {
-  //     setComments(
-  //       res.data
-  //     )
-  //   })
-  //   .catch(err=> console.log(err))
-  // }
-  
-  // function getCommentsByIssue(issueid){
-  //   console.log(issueid,'issueid')
-  //   commentsAxios.get(`/api/comments/issue/${issueid}`)
-  //   .then(res => {
-  //     console.log(res.data, 'response of all comments by issue')
-  //     setComments(res.data.reverse())
-  // })
-  //   .catch(err=> console.log(err))
-  // }
+ 
 
   function getAllComments(){
     commentsAxios.get('/api/comments')
