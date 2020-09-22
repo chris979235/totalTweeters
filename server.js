@@ -44,3 +44,13 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on local port 9000`)
 })
+
+// "repository": {
+//   "type": "git",
+//   "url": "git+https://github.com/chris979235/totalTweeters.git"
+// },
+  
+// "bugs": {
+//   "url": "https://github.com/chris979235/totalTweeters/issues"
+// },
+// "homepage": "https://github.com/chris979235/totalTweeters#readme",
