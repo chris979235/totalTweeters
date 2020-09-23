@@ -36,9 +36,8 @@ export default function Auth(){
 
   return (
     <Div className="auth-container"> 
-        <Intro>Welcome to TotalTweeters a place to create and talk about anything you want. 
-          get in touch with like minded individuals and share stories or complaints about your life.</Intro>
-      <h1> Total Tweeters</h1>
+        
+      <h1>Welcome to Total Tweeters</h1>
       { !toggle ?
         <>
           <AuthForm 
